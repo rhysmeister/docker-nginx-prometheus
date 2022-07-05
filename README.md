@@ -1,4 +1,4 @@
-# docker-nginx-lua-prometheus
+# docker-nginx-prometheus
 
 # Build & run docker container
 
