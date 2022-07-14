@@ -1,0 +1,17 @@
+[Unit]
+Description=Grok Exporter SystemD Service
+After=network.target
+
+[Service]
+Type=simple
+User=nginx
+Group=nginx
+Nice=-5
+ExecStart=/opt/grok_exporter/grok_exporter -config /etc/grok_exporter/grok_exporter.conf
+
+SyslogIdentifier="grok_exporter"
+Restart=always
+StartLimitBurst=1000
+
+[Install]
+WantedBy=multi-user.target

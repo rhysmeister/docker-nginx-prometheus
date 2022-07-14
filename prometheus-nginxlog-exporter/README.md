@@ -1,11 +1,14 @@
 # docker-nginx-prometheus
 
+A quick PoC of [prometheus-nginxlog-exporter](https://github.com/martin-helmich/prometheus-nginxlog-exporter).
+
 # Build & run docker container
 
 ```bash
 docker build --rm --tag centos7-nginx .
 docker run -p 80:80 -p 4040:4040 -tid --rm --privileged centos7-nginx
 ```
+
 # Check systemd services in docker container
 
 ```bash
@@ -13,7 +16,7 @@ systemctl status nginx
 systemctl status prometheus-nginxlog-exporter
 ```
 
-* Nginx & Prometheus endpoints
+# Nginx & Prometheus endpoints
 
 * nginx - http://localhost:80
 * Prometheus endpoint - http://localhost:4040/metrics

@@ -1,0 +1,25 @@
+# nginx access log counter
+# log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+#                   '$status $body_bytes_sent "$http_referer" '
+#                   '"$http_user_agent" "$http_x_forwarded_for"';
+# log example: 
+# 172.20.0.1 - - [18/Aug/2021:14:04:48 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36" "-"
+
+counter nginx_request by source, request_method, status
+counter nginx_request_pattern_matching_failed by source
+/^/ +
+/(?P<remote_addr>\S+) / +
+/- / +
+/(?P<remote_user>.+) / +
+/\[(?P<time_local>.+)\] / +
+/"(?P<request_method>\S+) (?P<request_uri>\S+) (?P<request_version>\S+)" / +
+/(?P<status>\S+) / +
+/(?P<body_bytes_sent>\S+) / + 
+/"(?P<http_referer>\S+)" / +
+/"(?P<http_user_agent>.+)" / +
+/"(?P<http_x_forwarded_for>\S+)"/ +
+/$/ {
+  nginx_request[getfilename()][$request_method][$status]++
+} else {
+  nginx_request_pattern_matching_failed[getfilename()]++
+}

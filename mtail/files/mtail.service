@@ -1,0 +1,17 @@
+[Unit]
+Description=Google mtail SystemD Service
+After=network.target
+
+[Service]
+Type=simple
+User=nginx
+Group=nginx
+Nice=-5
+ExecStart=/opt/mtail/mtail --progs /etc/mtail --logs /var/log/nginx/access.log
+
+SyslogIdentifier="mtail"
+Restart=always
+StartLimitBurst=1000
+
+[Install]
+WantedBy=multi-user.target
